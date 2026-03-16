@@ -54,7 +54,7 @@ jobs:
           name: wheels-${{ matrix.os }}-${{ matrix.arch }}
           path: wheelhouse
 
-  # Run linters.
+  # Run linters and build doc.
   linters:
     runs-on: ubuntu-latest
     steps:
@@ -65,6 +65,10 @@ jobs:
       - name: "Run linters"
         run: |
           make ci-lint
+      - name: "Build doc"
+        run: |
+          pip install -r docs/requirements.txt
+          cd docs && make html
 
   # Produce wheels as artifacts.
   upload-wheels:
